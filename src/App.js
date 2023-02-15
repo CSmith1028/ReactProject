@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import * as React from 'react';
 import './App.css';
 
 function App() {
@@ -28,9 +29,10 @@ function App() {
 		</div>
 		<div class="text" >
 			<br/>
-			<h1>Heading</h1>
+			<h1>About Me</h1>
+			<Projects/>
 			<br/>
-			<p> Text.
+			<p>
 			</p>
 			<br/>
       <br/>
@@ -49,6 +51,40 @@ function App() {
 	</footer>
     </> 
     )  
+
+	function Projects(){
+		let [data, setData] = React.useState(undefined)
+	
+		React.useEffect(() => {
+		  fetch('https://button-bejewled-mambo.glitch.me/')
+			.then((response) => response.json())
+			.then((data) => {
+			  setData(data)
+			});
+		})
+	
+	  return <> 
+		  
+		<br/><br/>
+	
+		Projects <br/><br/> 
+	
+		{data && <Project project={data.projects[0]}/>}
+		{data && <Project project={data.projects[1]}/>}
+		{data && <Project project={data.projects[2]}/>}
+	  </>
+	}
+	
+	function Project(props){
+	  return <div style={{border: "2px solid black", marginRight:"100px"}}>
+		Name: {props.project.name}
+		<ul>
+		  <li>Language: {props.project.languages[0]}</li>
+		  <li>Description: {props.project.description}</li>
+		</ul> 
+	  </div>
+	}
+	
 }
 
 export default App;
